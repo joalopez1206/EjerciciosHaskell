@@ -34,3 +34,10 @@ copy x = (x,x)
 
 apply :: (a -> b) -> a -> b
 apply f x = f x
+
+odds :: Int -> [Int]
+odds n = map (\x -> 2*x + 1) [0..n-1]
+
+
+factors :: Int -> [Int]
+factors n = [x | x <-[1..n], n `mod` x == 0]
