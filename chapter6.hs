@@ -56,7 +56,7 @@ and1 (x:xs) = x && and1 xs
 
 {-defining concat exercise-}
 concat2 :: [[a]] -> [a]
-concat2 [] = []
+concat2 []     = []
 concat2 (x:xs) = x ++ concat2 xs
 
 {-defining replicate exercise-}
@@ -66,25 +66,21 @@ replicate2 n x = x : replicate2 (n-1) x
 
 {-defining selection exercise-}
 nth :: [a] -> Int -> a
-nth (x:xs) 0 = x
-nth (x:xs) n = nth xs (n-1)
+nth (x:_) 0  = x
+nth (_:xs) n = nth xs (n-1)
 
 {-Is in list exercise-}
 elem1 :: Eq a => a -> [a] -> Bool
-elem1 _ [] = False
+elem1 _ []     = False
 elem1 a (x:xs) = a == x || elem1 a xs
 
 {-merge function exercise-}
+--given 2 sorted list returns a sorted list
 merge :: Ord a => [a] -> [a] -> [a]
 merge xs [] = xs
 merge [] ys = ys
-merge (x:xs) (y:ys) = if x > y 
-                        then 
-                           y : merge (x:xs) ys 
-                           -- y : (x : merge xs ys)
-                        else
-                           x : merge xs (y:ys)
-                            --x : (y : merge xs ys)
+merge (x:xs) (y:ys)  | x > y     = y : merge (x:xs) ys
+                     | otherwise = x : merge xs (y:ys)
 
 {-merge sort exercise-}
 halve :: [a] -> ([a],[a])
@@ -92,11 +88,11 @@ halve xs = (take (n `div` 2) xs , drop (n `div` 2) xs )
                 where n = length xs
 
 msort :: Ord a => [a] -> [a]
-msort [] = []
+msort []  = []
 msort [x] = [x]
-msort xs = merge (msort halve1) (msort halve2)
-            where halve1 = fst (halve xs)
-                  halve2 = snd (halve xs)
+msort xs  = merge (msort ys) (msort zs)
+            where 
+               (ys,zs) = halve xs
 
 {------------------------------------------
 defining calculate sum of list with the steps
@@ -141,15 +137,15 @@ sumlist = foldr (+) 0
 
 -- trying define foldr ? --
 foldrxd :: (a -> a -> a) -> a -> [a] -> a
-foldrxd op a [] = a
+foldrxd op a []     = a
 foldrxd op a (x:xs) = x `op` (foldrxd op a xs)
 
 {-the other ones are left as a exercise-}
 
 {-take a given number of elements from the start of a list-}
 take_2 :: Int -> [a] -> [a]
-take_2 0 _ = []
-take_2 _ [] = []
+take_2 0 _      = []
+take_2 _ []     = []
 take_2 n (x:xs) = x : take_2 (n-1) xs 
 
 {-select the last element of a non-empty list-}
