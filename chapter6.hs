@@ -84,8 +84,10 @@ merge (x:xs) (y:ys)  | x > y     = y : merge (x:xs) ys
 
 {-merge sort exercise-}
 halve :: [a] -> ([a],[a])
-halve xs = (take (n `div` 2) xs , drop (n `div` 2) xs )
-                where n = length xs
+halve xs = (take half xs , drop half xs )
+                where 
+                  n = length xs
+                  half = n `div` 2
 
 msort :: Ord a => [a] -> [a]
 msort []  = []
