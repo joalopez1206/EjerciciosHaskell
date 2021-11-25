@@ -58,10 +58,18 @@ dropWhile' p (b:bs) | p b = dropWhile' p bs
 dec2int :: [Int] -> Int
 dec2int = foldl (\x xs -> 10*x + xs) 0
 
+--trying with recursion instead of foldl
+dec2intrec :: [Int] -> Int
+dec2intrec  = go1 0
+
+go1 :: Int -> [Int] -> Int
+go1 v [] = v
+go1 v (x:xs) = go1 (10*v + x) xs
+
 curryxd :: ((a,b) -> c) -> (a -> b -> c)
 curryxd f x y = f (x,y)
 
-uncurry2 :: (a -> b -> c) -> ((a,b) -> c)
+uncurry2 :: (a -> b -> c) -> (a,b) -> c
 uncurry2 f (x,y) = f x y 
 
 
