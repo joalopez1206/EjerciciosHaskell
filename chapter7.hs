@@ -56,7 +56,7 @@ dropWhile' p (b:bs) | p b = dropWhile' p bs
                     | otherwise = (b:bs)
 
 dec2int :: [Int] -> Int
-dec2int = foldl (\x xs -> 10*x + xs) 0
+dec2int = foldl (\x y -> 10*x + y) 0
 
 --trying with recursion instead of foldl
 dec2intrec :: [Int] -> Int
@@ -72,7 +72,18 @@ curryxd f x y = f (x,y)
 uncurry2 :: (a -> b -> c) -> (a,b) -> c
 uncurry2 f (x,y) = f x y 
 
+unfold p h t x | p x = []
+               | otherwise = h x : unfold p h t (t x)
 
--- foldl :: (a -> b -> a) -> a -> [b] -> a
--- foldl f v [] = v
--- foldl f v (x:xs) = foldl f (f v x) xs
+int2bin = unfold (== 0) (`mod` 2) (`div` 2)
+
+chop8 :: [int] -> [[int]]
+chop8 = unfold (null) (take 8) (drop 8)
+
+iterate2 f = unfold (\x -> False) id f
+
+mapxd f = unfold (null) (f . head) (tail)
+
+altMap  :: (a -> b) -> (a -> b) -> [a] -> [b]
+altMap f g [] = []
+altMap f g (x:xs) = f x : altMap g f xs 
