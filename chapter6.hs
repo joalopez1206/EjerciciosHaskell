@@ -48,7 +48,8 @@ init [1,2,3] = 1 : init [2,3]
              = 1 : (2 : [])
              = [1,2]
 -}
-
+-- specificaction based testing
+-- quickcheck
 {-defining and exercise-}
 and1 :: [Bool] -> Bool
 and1 []     = True
